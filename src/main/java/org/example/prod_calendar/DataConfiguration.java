@@ -22,10 +22,14 @@ public class DataConfiguration {
         ZonedDateTime moscowDateTime = dateTime.atZone(ZoneId.of("Europe/Moscow"));
         LocalTime startOfWorkDay = LocalTime.of(9, 0);
         LocalTime endOfWorkDay = LocalTime.of(18, 0);
+        LocalTime lunchStartTime = LocalTime.of(12, 0);
+        LocalTime lunchEndTime = LocalTime.of(13, 0);
         DayOfWeek dayOfWeek = moscowDateTime.getDayOfWeek();
         boolean isWeekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
         LocalTime moscowTime = moscowDateTime.toLocalTime();
         boolean isWorkingTime = !moscowTime.isBefore(startOfWorkDay) && !moscowTime.isAfter(endOfWorkDay);
-        return isWeekend || !isWorkingTime;
+        boolean isLunchTime = moscowTime.isAfter(lunchStartTime) && moscowTime.isBefore(lunchEndTime);
+        return isWeekend || !isWorkingTime || isLunchTime;
     }
+
 }
